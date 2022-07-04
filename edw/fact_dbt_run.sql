@@ -1,0 +1,52 @@
+{{
+  config(
+    unique_key = 'run_step_id',
+    tags=['dbt_logs']
+  )
+}}
+
+select 
+    run.run_step_id
+    ,run.run_id
+    ,job.job_id
+    ,job.job_name
+    ,run.run_status
+    ,run.run_custom_status
+    ,run.run_custom_status_code
+    ,run.is_complete
+    ,run.is_success
+    ,run.is_error
+    ,run.is_cancelled
+    ,run.is_in_progress
+    ,run.run_started_at_timestamp
+    ,run.run_started_at_date_id
+    ,run.run_finished_at_timestamp
+    ,run.run_finished_at_timestamp_id
+    ,run.run_duration_name
+    ,run.run_duration
+    ,run.run_step_name
+    ,run.run_step_index
+    ,run.run_step_status_humanized
+    ,run.run_step_started_at_timestamp
+    ,run.run_step_started_at_date_id
+    ,run.run_step_finished_at_timestamp
+    ,run.run_step_finished_at_date_id
+    ,run.run_step_duration_name
+    ,run.run_step_duration
+    ,run.run_step_logs
+    ,run.run_step_totals_message
+    ,run.run_step_pass_count
+    ,run.run_step_warn_count
+    ,run.run_step_error_count
+    ,run.run_step_skip_count
+    ,run.run_step_total_count
+    ,run.dbt_test_failure_message
+    ,run.dbt_error_message
+    ,run.run_href
+    ,run.is_active_flag
+    ,run.job_warn_count
+    ,run.job_error_count
+    ,run.job_skip_count
+    ,run.job_total_count
+from {{ ref('stg_dbt_run') }} run
+left join {{ref('stg_dbt_job')}} job on run.job_id = job.job_id
